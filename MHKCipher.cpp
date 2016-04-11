@@ -4,6 +4,10 @@
 
 using namespace std;
 
+vector<int> get_pb(vector<int> origin_super, int large_p, int a);
+vector<int> decrypt_MHK(int secret_message, int large_p, int a, vector<int> origin_super);
+int find_inverse(int to_inv, int prime);
+
 int main(){
 	//MHK cipher takes in a super increasing sequence
 	//This is to change
