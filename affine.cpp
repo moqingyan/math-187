@@ -1,140 +1,45 @@
-#include <cmath>
 #include <string>
 #include <vector>
 #include <iostream>
 
 using namespace std;
 
-int det(vector <vector<int> > b,int m);
+int find_inverse(int to_inv, int prime);
+int euclidean_algorithm (int a, int b);
+int decode_affine(string cipher, int prime, int a, int b);
 int num_to_ascii(int num, int scale);
 int ascii_to_num (int ascii, int scale);
- vector< vector<int> > rev_mat(vector <vector<int> > b, int prime);
-int find_inverse(int to_inv, int prime);
-vector<int> v_mult (vector< vector<int> > key_r, vector<int> cipher
-        ,int prime);
-int euclidean_algorithm (int a, int b);
-string decode_HS(string cipher, vector< vector<int> > key, 
-        int prime, int scale);
 
 int main(){
+	string cipher = "lzzwazm";
+	int prime = 26;
+	int a = 5;
+	int b = 7;
 
-    vector< vector<int> > mat = {
-        {4,3},
-        {6,5}
-    };
-    
-    vector<int> v2 = {28,14};
+	decode_affine(cipher,prime, a,b);
 
-    string cipher = "6gththfb1tfi";
-    int prime = 37;
-    int scale = 37;
-    //v_mult(mat, v2, prime);
-
-    decode_HS(cipher,mat, prime, scale);
-
-    //cout << "This is det of the mat: " << det(mat, 2)<< endl;
 }
 
-string decode_HS(string cipher, vector< vector<int> > key, 
-        int prime, int scale)
-{   
-    const char* cip_ptr = cipher.c_str();
-    vector<int> v_arr[cipher.size()/2];
-    vector< vector<int> > key_i = rev_mat(key, prime);
-    vector<int> m_arr[cipher.size()/2];
-    string message = "";
-
-    for(int ct =0 ; ct < (cipher.size()/2); ct++){
-
-        
-
-        v_arr[ct].push_back( ascii_to_num(cip_ptr[ct*2], scale));
-        v_arr[ct].push_back( ascii_to_num(cip_ptr[ct*2 + 1], scale));
-
-        cout << "varr["<<ct<<"]"<<"( "<<v_arr[ct][0]<<","
-            <<v_arr[ct][1] << " )"<< endl;
-
-        m_arr[ct] = v_mult(key_i, v_arr[ct], prime);
-
-        cout << "marr["<<ct<<"]"<<"( "<<m_arr[ct][0]<<","
-            <<m_arr[ct][1] << " )"<< endl;
-
-        message += num_to_ascii(m_arr[ct][0], scale);
-        message += num_to_ascii(m_arr[ct][1], scale);
-
-    }
-    
-    cout<<"the massage is: "<<message<<endl;
-    return message;
-}
-
-vector<int> v_mult (vector< vector<int> > key_r, vector<int> cipher
-        ,int prime)
+int decode_affine(string cipher, int prime, int a, int b)
 {
-    vector<int> ret = {0,0};
+	int inv_a = find_inverse(a, prime);
+	const char* cipher_ptr = cipher.c_str();
+	string message = "";
 
-    cout<<"the vector's origin value is:" << 
-    cipher[0] * key_r[0][0] + cipher[1]* key_r[0][1]<< ","
-    <<cipher[0] * key_r[1][0] + cipher[1]* key_r[1][1]<<endl;
+	for(int ct = 0; ct<cipher.size();ct++){
+		int new_m = inv_a * (ascii_to_num(cipher_ptr[ct], 26) - b) % prime;
+			cout<<"This was the new_m: "<<new_m << endl;
 
-    ret[0] = (cipher[0] * key_r[0][0] + cipher[1]* key_r[0][1]) % prime;
-    ret[1] = (cipher[0] * key_r[1][0] + cipher[1]* key_r[1][1]) % prime;
-    return ret;
-}
+		if(new_m < 0){
+			//cout<<"This was the new_m: "<<new_m << endl;
+			new_m = prime + new_m;
+		}
+		message += num_to_ascii(new_m, 26);
+		cout << "The num is: "<<new_m << endl;
+	}
 
- vector< vector<int> > rev_mat(vector< vector<int> > b, int prime)
-{
-    int rev_det_b = find_inverse(det(b, 2), prime);
-    vector< vector<int> > rev = {
-        {0,0},
-        {0,0}
-    };
-
-    rev[0][0] = b[1][1] * rev_det_b % prime;
-    rev[0][1] = (-1) * b[0][1] * rev_det_b % prime;
-    rev[1][0] = (-1) * b[1][0] * rev_det_b % prime;
-    rev[1][1] = b[0][0] * rev_det_b % prime;
-    
-    cout << "the key matrix is: "<<endl;
-    for(int i = 0; i<2; i++){
-        for(int j = 0; j<2; j++){
-            if(rev[i][j] < 0){
-                rev[i][j] = prime + rev[i][j];
-            }
-
-            cout << rev[i][j] << "  ";
-        }
-        cout << endl;
-    }
-
-    return rev;
-}
-
-//https://gist.github.com/suryadharani/4037974
-int det(vector< vector<int> > b,int m)
-{
-    int sum=0,x=0,y=0,i=0,j,aa,bb,c[b.size()][b.size()];
-    //if(m==2)
-    return(b[0][0]*b[1][1]-b[0][1]*b[1][0]);
-    /*
-       else
-    {
-        for(j=0;j<m;j++)
-        {
-                for(aa=0,y=0;aa<m;aa++)
-                {
-                                for(bb=0;bb<m;bb++)
-                                {
-                              
-                                }
-                               if(y>0)x++;
-                               y=0;
-                }
-             sum=sum+b[i][j]*pow(-1,i+j)*det(c,m-1);
-        }
-    }
-    return sum;
-    */
+	cout << "This is message: " << message << endl;
+	return 0;
 }
 
 int ascii_to_num (int ascii, int scale)
@@ -179,6 +84,7 @@ int ascii_to_num (int ascii, int scale)
     }
 }
 
+
 int num_to_ascii(int num, int scale)
 {
     if (scale != 26 && scale != 37){
@@ -213,7 +119,6 @@ int num_to_ascii(int num, int scale)
     }
 }
 
-/*find out the inverse of a number */
 int find_inverse(int to_inv, int prime){
 
     /*using eudlidean algorithm*/
