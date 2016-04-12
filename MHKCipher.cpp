@@ -12,10 +12,10 @@ int euclidean_algorithm (int a, int b);
 int main(){
     //MHK cipher takes in a super increasing sequence
     //This is to change
-    vector<int> origin_super = {2, 5, 9,22,47,99,203,409};
-    int large_p = 997;
-    int a = 60;
-    int secret_message = 1255;
+    vector<int> origin_super = {2, 5, 8,21,40};
+    int large_p = 79;
+    int a = 16;
+    int secret_message = 61;
 
     //find_inverse(a, large_p);
     //int retV = euclidean_algorithm(a, large_p);

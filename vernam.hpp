@@ -16,7 +16,7 @@ int vernam_decryption(string & plain, const string & cipher,
 	length_W = key_W.size();
 	
 	/*find out the matching number for plain text*/
-	int transed[length] = {0};
+	vector<int> transed ;
 	string_to_number (cipher.c_str(), transed);
 
 	int to_store = 0;
@@ -50,7 +50,7 @@ int vernam_encryption(const string & plain, string & cipher,
 	length_W = key_W.size();
 
 	/*find out the matching number for plain text*/
-	int transed[length] = {0};
+	vector<int> transed;
 	string_to_number (plain.c_str(), transed);
 
 	/*encode them into cipher text*/
@@ -101,7 +101,7 @@ int LCM(int x,int y)
       }   //LCM = (x*y)/(GCD)
    }
 
-int string_to_number (const char* to_trans, int* transed){
+int string_to_number (const char* to_trans, vector<int> & transed){
 	
 	int count = 0;
 	int offset = -1;
@@ -122,7 +122,7 @@ int string_to_number (const char* to_trans, int* transed){
 			return -1;
 		}
 
-		transed[count] = offset;
+		transed.push_back(offset);
 		to_trans++;
 		count++;
 

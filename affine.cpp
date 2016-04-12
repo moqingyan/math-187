@@ -11,10 +11,10 @@ int num_to_ascii(int num, int scale);
 int ascii_to_num (int ascii, int scale);
 
 int main(){
-	string cipher = "lzzwazm";
+	string cipher = "rpnaonvl";
 	int prime = 26;
-	int a = 5;
-	int b = 7;
+	int a = 19;
+	int b = 13;
 
 	decode_affine(cipher,prime, a,b);
 

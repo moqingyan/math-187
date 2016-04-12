@@ -11,17 +11,17 @@ int main(){
 	
 	//because we know the length of cipher and plain should be the same
 	//initialize the plain text with the cipher text as well
-/*
-	string cipher ("PJZMEPMJZWEBY");
+
+	string cipher ("MJZWLRXFVIUYX");
 	string plain(cipher);
 	vector<int> key_U = {3, 5};
 	vector<int> key_V = {16,23,18};
 
 	vernam_decryption( plain, cipher, key_U, key_V) ;
-*/	
+	
 
 	/*Verman cipher encoding*/
-	
+	/*
 	
 	string plain ("WHERESTHEBEEF");
 	string cipher(plain);
@@ -29,6 +29,7 @@ int main(){
 	vector<int> key_V = {16,23,18};
 
 	vernam_encryption( plain, cipher, key_U, key_V) ;	
+    */
 
 	/*vigenere cipher decoding*/
 	

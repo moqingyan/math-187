@@ -19,13 +19,13 @@ string decode_HS(string cipher, vector< vector<int> > key,
 int main(){
 
     vector< vector<int> > mat = {
-        {4,3},
-        {6,5}
+        {7,6},
+        {8,7}
     };
     
-    vector<int> v2 = {28,14};
+    vector<int> v2 = {4,14};
 
-    string cipher = "6gththfb1tfi";
+    string cipher = "2b9huc";
     int prime = 37;
     int scale = 37;
     //v_mult(mat, v2, prime);

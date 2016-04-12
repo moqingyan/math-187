@@ -10,7 +10,7 @@ int ceasar_encryption(const char* plain, char* cipher, int key);
 int ceasar_decryption(char* plain, const char* cipher, int key);
 int count_char(const char* to_count);
 int vignere_decryption ( char* plain, const char* cipher, const int length);
-int string_to_number (const char* to_trans, int* transed);
+int string_to_number (const char* to_trans, vector<int> & transed);
 int vernam_encryption(const string & plain, string & cipher, 
 	const vector<int> & key_U, const vector<int> & key_V);
 int vernam_decryption(string & plain, const string & cipher, 
